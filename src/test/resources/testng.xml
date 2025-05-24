@@ -1,0 +1,13 @@
+<!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
+<suite name="Selenium Test Suite">
+    <listeners>
+        <listener class-name="com.cselcuk89.seleniumautomationframework.listeners.TestListener"/>
+    </listeners>
+    <test thread-count="1" name="Application Tests">
+        <classes>
+            <class name="com.cselcuk89.seleniumautomationframework.tests.LoginTest"/>
+            <class name="com.cselcuk89.seleniumautomationframework.tests.SearchTest"/>
+            <class name="com.cselcuk89.seleniumautomationframework.tests.ProductPageTest"/>
+        </classes>
+    </test>
+</suite>
