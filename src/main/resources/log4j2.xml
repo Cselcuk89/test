@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration status="WARN" monitorInterval="30">
+    <Properties>
+        <Property name="LOG_PATTERN">%d{yyyy-MM-dd HH:mm:ss.SSS} %-5level [%t] %c{1.} - %msg%n</Property>
+        <Property name="APP_LOG_ROOT">logs</Property> <!-- Log files directory -->
+    </Properties>
+
+    <Appenders>
+        <!-- Console Appender -->
+        <Console name="Console" target="SYSTEM_OUT" follow="true">
+            <PatternLayout pattern="${LOG_PATTERN}"/>
+        </Console>
+
+        <!-- File Appender -->
+        <RollingFile name="FileAppender"
+                     fileName="${APP_LOG_ROOT}/app.log"
+                     filePattern="${APP_LOG_ROOT}/app-%d{yyyy-MM-dd}-%i.log.gz">
+            <PatternLayout pattern="${LOG_PATTERN}"/>
+            <Policies>
+                <SizeBasedTriggeringPolicy size="10MB"/> <!-- Rollover after 10 MB -->
+                <TimeBasedTriggeringPolicy interval="1" modulate="true"/> <!-- Rollover daily -->
+            </Policies>
+            <DefaultRolloverStrategy max="10"/> <!-- Keep up to 10 archived log files -->
+        </RollingFile>
+
+        <!-- Optional: Separate File Appender for TestNG/Automation specific logs -->
+        <RollingFile name="TestLogAppender"
+                     fileName="${APP_LOG_ROOT}/automation.log"
+                     filePattern="${APP_LOG_ROOT}/automation-%d{yyyy-MM-dd}-%i.log.gz">
+            <PatternLayout pattern="${LOG_PATTERN}"/>
+            <Policies>
+                <SizeBasedTriggeringPolicy size="10MB"/>
+                <TimeBasedTriggeringPolicy interval="1" modulate="true"/>
+            </Policies>
+            <DefaultRolloverStrategy max="5"/>
+        </RollingFile>
+
+    </Appenders>
+
+    <Loggers>
+        <!-- Root Logger -->
+        <Root level="info">
+            <AppenderRef ref="Console"/>
+            <AppenderRef ref="FileAppender"/>
+        </Root>
+
+        <!-- Application/Framework Specific Loggers -->
+        <!-- Set level to 'debug' for more detailed logs from your project -->
+        <Logger name="com.cselcuk89.liveautomationproject" level="debug" additivity="false">
+            <AppenderRef ref="Console"/>
+            <AppenderRef ref="TestLogAppender"/> <!-- Or FileAppender if you prefer single file -->
+        </Logger>
+
+        <!-- Spring Framework Logging -->
+        <Logger name="org.springframework" level="info" additivity="false">
+            <AppenderRef ref="Console"/>
+            <AppenderRef ref="FileAppender"/>
+        </Logger>
+        
+        <!-- Playwright Internal Logging (can be verbose) -->
+        <Logger name="com.microsoft.playwright" level="warn" additivity="false">
+            <AppenderRef ref="Console"/>
+            <AppenderRef ref="FileAppender"/>
+        </Logger>
+
+    </Loggers>
+</Configuration>

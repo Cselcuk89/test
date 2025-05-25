@@ -1,0 +1,13 @@
+<!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
+<suite name="Live Automation Project Test Suite"> <!-- Updated suite name -->
+    <listeners>
+        <listener class-name="com.cselcuk89.liveautomationproject.listeners.TestListener"/>
+    </listeners>
+    <test thread-count="1" name="Application Tests">
+        <classes>
+            <class name="com.cselcuk89.liveautomationproject.tests.LoginTest"/>
+            <class name="com.cselcuk89.liveautomationproject.tests.SearchTest"/>
+            <class name="com.cselcuk89.liveautomationproject.tests.ProductPageTest"/>
+        </classes>
+    </test>
+</suite>
